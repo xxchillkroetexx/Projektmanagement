@@ -32,6 +32,12 @@
     margin-right: 0;
 }
 
+#foot {
+    width: auto;
+    height: 100px;
+    background-color: violet;
+    margin-top: 200px;
+}
 
 
 /* Timer */
