@@ -1,80 +1,76 @@
 //Include Modules
-const http = require("http");
 const path = require("path");
-const fs = require("fs");
-var sqlite3 = require('sqlite3');
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT | 5000;
+const sqlite3 = require("sqlite3");
+const language = "de";
 
-//Create Server
-const server = http.createServer((req, res) => {
-  // Build file path
-  let filePath = path.join( __dirname, "public", req.url === "/" ? "game.html" : req.url);
+//Import CSS, JS, IMG files
+app.use(express.static(__dirname + "/public/css"));
+app.use(express.static(__dirname + "/public/js"));
+app.use(express.static(__dirname + "/public/img"));
 
-  // Extension of file
-  let extname = path.extname(filePath);
+// ##################################################################### //
+// ############################# Setup Side ############################ //
+// ##################################################################### //
 
-  // Initial content type
-  let contentType = "text/html";
-
-  // Check ext and set content type
-  switch (extname) {
-    case ".js":
-      contentType = "text/javascript";
-      break;
-    case ".css":
-      contentType = "text/css";
-      break;
-    case ".json":
-      contentType = "application/json";
-      break;
-    case ".png":
-      contentType = "image/png";
-      break;
-    case ".jpg":
-      contentType = "image/jpg";
-      break;
-  }
-
-  // Check if contentType is text/html but no .html file extension
-  if (contentType == "text/html" && extname == "") filePath += ".html";
-
-  // log the filePath
-  console.log(filePath);
-
-  // Read File
-  fs.readFile(filePath, (err, content) => {
-    if (err) {
-      if (err.code == "ENOENT") {
-        // Page not found
-        fs.readFile(
-          path.join(__dirname, "public", "404.html"),
-          (err, content) => {
-            res.writeHead(404, { "Content-Type": "text/html" });
-            res.end(content, "utf8");
-          }
-        );
-      } else {
-        //  Some server error
-        res.writeHead(500);
-        res.end(`Server Error: ${err.code}`);
-      }
-    } else {
-      // Success
-      res.writeHead(200, { "Content-Type": contentType });
-      res.end(content, "utf8");
-    }
-  });
+//Setup Get Request for "localhost:5000/"
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "/html/game.html"));
 });
 
-const PORT = process.env.PORT || 5000;
+//Frontend callback
+app.get("/db_cards/:dynamic", (req, res) => {
+  const { dynamic } = req.params;
+  if (dynamic == "cards") {
+    (async () => {
+      res.send(await getCards());
+    })();
+  }
+  else {
+    (async () => {
+      res.send(await getCardInfo(dynamic));
+    })();
+  }
+});
 
-//Test Database
-var db = new sqlite3.Database('assets/spielekarten.db');
-db.all('SELECT * FROM spielekarten', (err, rows) => {
-        rows.forEach(row => {
-            console.log(row.DHBW);
-        });
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// ##################################################################### //
+// ############################## Database ############################# //
+// ##################################################################### //
+
+var db = new sqlite3.Database("database/spielekarten.db");
+
+//Get all possible Card-Words from Database
+async function getCards() {
+  const data = await new Promise((resolve) => {
+    db.all("SELECT name FROM cards_" + language, (err, rows) => {
+      i = 0;
+      var res = [];
+      rows.forEach((row) => {
+        res[i] = row.name;
+        i++;
+      });
+
+      resolve(JSON.stringify(res));
     });
+  });
+  return data;
+}
 
-db.close();
+//Get all associated Card-Words from Database
+async function getCardInfo(cardName) {
+  const data = await new Promise((resolve) => {
+    db.get(
+      "SELECT * FROM cards_" + language + ' WHERE name="' + cardName + '"',
+      (err, row) => {
+        resolve(row);
+      }
+    );
+  });
 
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  cardWords = [data.word_1, data.word_2, data.word_3, data.word_4, data.word_5];
+  return JSON.stringify(cardWords);
+}
