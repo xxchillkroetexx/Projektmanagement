@@ -42,6 +42,7 @@ async function nextCard() {
     //Complete card
     console.log(infoDATA);
     i = 0;
+    infoCurrentCard = '';
     infoDATA.forEach((element) => {
         infoCurrentCard += infoDATA[i] + "\n";
         i++;

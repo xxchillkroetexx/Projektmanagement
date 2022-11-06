@@ -22,16 +22,19 @@ app.get("/", (req, res) => {
 
 //Frontend callback
 app.get("/db_cards/:dynamic", (req, res) => {
-  const { dynamic } = req.params;
-  if (dynamic == "cards") {
-    (async () => {
-      res.send(await getCards());
-    })();
-  }
-  else {
-    (async () => {
-      res.send(await getCardInfo(dynamic));
-    })();
+  try {
+    const { dynamic } = req.params;
+    if (dynamic == "cards") {
+      (async () => {
+        res.send(await getCards());
+      })();
+    } else {
+      (async () => {
+        res.send(await getCardInfo(dynamic));
+      })();
+    }
+  } catch (e) {
+    console.log("Get '/db_cards/:dynamic' Error:\n" + e);
   }
 });
 
@@ -49,32 +52,50 @@ var db = new sqlite3.Database("database/spielekarten.db");
 
 //Get all possible Card-Words from Database
 async function getCards() {
-  const data = await new Promise((resolve) => {
-    db.all("SELECT name FROM cards_" + language, (err, rows) => {
-      i = 0;
-      var res = [];
-      rows.forEach((row) => {
-        res[i] = row.name;
-        i++;
-      });
+  try {
+    const data = await new Promise((resolve) => {
+      db.all('SELECT name FROM cards_' + language, (err, rows) => {
+        i = 0;
+        var res = [];
+        rows.forEach((row) => {
+          res[i] = row.name;
+          i++;
+        });
 
-      resolve(JSON.stringify(res));
+        resolve(JSON.stringify(res));
+      });
     });
-  });
-  return data;
+    return data;
+  } catch (e) {
+    console.log("SQL Error:\n" + e);
+  }
 }
 
 //Get all associated Card-Words from Database
 async function getCardInfo(cardName) {
-  const data = await new Promise((resolve) => {
-    db.get(
-      "SELECT * FROM cards_" + language + ' WHERE name="' + cardName + '"',
-      (err, row) => {
-        resolve(row);
-      }
-    );
-  });
-
-  cardWords = [data.word_1, data.word_2, data.word_3, data.word_4, data.word_5];
-  return JSON.stringify(cardWords);
+  try {
+    const data = await new Promise((resolve) => {
+      db.get(
+        'SELECT * FROM cards_' + language + ' WHERE name="' + cardName + '"',
+        (err, row) => {
+          resolve(row);
+        }
+      );
+    });
+    if (data != null) {
+      cardWords = [
+        data.word_1,
+        data.word_2,
+        data.word_3,
+        data.word_4,
+        data.word_5,
+      ];
+    }
+    else {
+      cardWords = ["No Items Found"];
+    }
+    return JSON.stringify(cardWords);
+  } catch (e) {
+    console.log("SQL Error:\n" + e);
+  }
 }
