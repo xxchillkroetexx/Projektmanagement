@@ -35,6 +35,10 @@ app.get("/db_cards/:dynamic", (req, res) => {
   }
 });
 
+app.use((req, res, next) => {
+  res.status(404).sendFile(path.join(__dirname, "/html/404.html"));
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // ##################################################################### //
