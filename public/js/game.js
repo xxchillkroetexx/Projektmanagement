@@ -2,10 +2,11 @@
 const dbResponseURL = "http://localhost:5000/db_cards/";
 
 //Setup buttons and text fields
-const falseBtn = document.getElementById("falsch");
-const trueBtn = document.getElementById("richtig");
-const skipBtn = document.getElementById("überspringen");
-const showCard = document.getElementById("spielkarten");
+const falseBtn = document.getElementById("false");
+const trueBtn = document.getElementById("true");
+const skipBtn = document.getElementById("skip");
+const cardWord = document.getElementById("h1_word");
+const cardInfoWord = [document.getElementsByClassName("word_1"), document.getElementsByClassName("word_2"), document.getElementsByClassName("word_3"), document.getElementsByClassName("word_4"), document.getElementsByClassName("word_5")];
 
 // ##################################################################### //
 // ######################## Database Integration ####################### //
@@ -13,7 +14,6 @@ const showCard = document.getElementById("spielkarten");
 
 //Current-Card-Data
 var textCurrentCard = "";
-var infoCurrentCard = "";
 
 //Get infos from DB and setup new Card
 async function nextCard() {
@@ -42,12 +42,11 @@ async function nextCard() {
     //Complete card
     console.log(infoDATA);
     i = 0;
-    infoCurrentCard = '';
     infoDATA.forEach((element) => {
-        infoCurrentCard += infoDATA[i] + "\n";
+        cardInfoWord[i][0].innerText = infoDATA[i] ;
         i++;
     });
-    showCard.innerText = textCurrentCard + "\n\n" + infoCurrentCard;
+    cardWord.innerHTML = textCurrentCard;
 }
 
 // ##################################################################### //

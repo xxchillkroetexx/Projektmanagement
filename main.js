@@ -17,7 +17,7 @@ app.use(express.static(__dirname + "/public/img"));
 
 //Setup Get Request for "localhost:5000/"
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/html/game.html"));
+  res.sendFile(path.join(__dirname, "/public/html/game_new.html"));
 });
 
 //Frontend callback
@@ -39,7 +39,7 @@ app.get("/db_cards/:dynamic", (req, res) => {
 });
 
 app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, "/html/404.html"));
+  res.status(404).sendFile(path.join(__dirname, "/public/html/404.html"));
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
@@ -56,7 +56,7 @@ async function getCards() {
     const data = await new Promise((resolve) => {
       db.all('SELECT name FROM cards_' + language, (err, rows) => {
         i = 0;
-        var res = [];
+        res = [];
         rows.forEach((row) => {
           res[i] = row.name;
           i++;
