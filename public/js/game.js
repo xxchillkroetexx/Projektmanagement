@@ -7,6 +7,9 @@ const trueBtn = document.getElementById("true");
 const skipBtn = document.getElementById("skip");
 const cardWord = document.getElementById("h1_word");
 const cardInfoWord = [document.getElementsByClassName("word_1"), document.getElementsByClassName("word_2"), document.getElementsByClassName("word_3"), document.getElementsByClassName("word_4"), document.getElementsByClassName("word_5")];
+const pointsTeam1 = document.getElementById("spielstandTeam1");
+const pointsTeam2 = document.getElementById("spielstandTeam2");
+const currentTeam = 1;
 
 // ##################################################################### //
 // ######################## Database Integration ####################### //
@@ -17,7 +20,7 @@ var textCurrentCard = "";
 
 //Get infos from DB and setup new Card
 async function nextCard() {
-    
+
     //get available Cards
     const cardsRS = await fetch(dbResponseURL + "cards", {
         method: "GET",
@@ -43,7 +46,7 @@ async function nextCard() {
     console.log(infoDATA);
     i = 0;
     infoDATA.forEach((element) => {
-        cardInfoWord[i][0].innerText = infoDATA[i] ;
+        cardInfoWord[i][0].innerText = infoDATA[i];
         i++;
     });
     cardWord.innerHTML = textCurrentCard;
@@ -54,25 +57,39 @@ async function nextCard() {
 // ##################################################################### //
 
 
+function trueBtnClicked() {
+    if (currentTeam == 1) {
+        points = parseInt(pointsTeam1.innerHTML);
+        points++;
+        pointsTeam1.innerHTML = points.toString();
+    }
+    if (currentTeam == 2) {
+        points = parseInt(pointsTeam2.innerHTML);
+        points++;
+        pointsTeam2.innerHTML = points.toString();
+    }
+    nextCard();
+}
 
-/*
-// Spielkarten aus ./assets/spielkarten.json in Array "cards" importieren
-fetch("./assets/spielkarten.json")
-    .then((response) => {
-        return response.json;
-    })
-    .then((jsondata) => console.info(jsondata));
-console.log("hello World");
-*/
-
-/**
- *  Zufällige Karte aus Array "cards" anzeigen
- */
-
+function falseBtnClicked() {
+    if (currentTeam == 1) {
+        points = parseInt(pointsTeam2.innerHTML);
+        points++;
+        pointsTeam2.innerHTML = points.toString();
+    }
+    if (currentTeam == 2) {
+        points = parseInt(pointsTeam1.innerHTML);
+        points++;
+        pointsTeam1.innerHTML = points.toString();
+    }
+    nextCard();
+}
 /**
  * Buttons mit Funktion versehen
  */
 skipBtn.addEventListener("click", nextCard);
+falseBtn.addEventListener("click", falseBtnClicked)
+trueBtn.addEventListener("click", trueBtnClicked);
 
 /**
  * TIMER LAUFEN LASSEN
