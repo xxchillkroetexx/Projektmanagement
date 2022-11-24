@@ -1,0 +1,182 @@
+.head {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+
+    h1 {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        transition: 0s;
+        line-height: 1.2em;
+    }
+
+    /* ##################################################################### */
+
+    .box1 {
+        position: relative;
+        width: 33%;
+        height: 75px;
+        top: -3px;
+        left: -3px;
+        padding: 10px;
+        margin-right: 2%;
+        background: #333;
+        transition: 0.5s;
+
+        h1 {
+            color: blue;
+        }
+
+        .line_box1 {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            overflow: hidden;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 150%;
+                height: 50px;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(transparent, blue, blue, blue, transparent);
+                animation: animation 8s linear infinite;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 3px;
+                background: #292929;
+            }
+        }
+    }
+
+    /* ##################################################################### */
+
+    .box2 {
+        position: relative;
+        width: 33%;
+        height: 30px;
+        top: -3px;
+        left: -3px;
+        padding: 10px;
+        margin-right: 2%;
+        background: #333;
+        transition: 0.5s;
+
+        .timer {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            transition: 0s;
+            line-height: 1.2em;
+            color: white;
+        }
+
+        .line_box2 {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            overflow: hidden;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 100%;
+                height: 100%;
+                transform: translate(-50%, -50%);
+                animation: animation_timer 1s linear infinite;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 3px;
+                background: #292929;
+            }
+        }
+    }
+
+    /* ##################################################################### */
+
+    .box3 {
+        position: relative;
+        width: 33%;
+        height: 75px;
+        top: -3px;
+        left: 3px;
+        padding: 10px;
+        background: #333;
+        transition: 0.5s;
+
+        h1 {
+            color: red;
+        }
+
+        .line_box3 {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            overflow: hidden;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 150%;
+                height: 50px;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(transparent, red, red, red, transparent);
+                animation: animation 8s linear infinite;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 3px;
+                background: #292929;
+            }
+        }
+    }
+}
+
+/* ##################################################################### */
+
+@keyframes animation {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes animation_timer {
+    0% {
+        background-color: green;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
