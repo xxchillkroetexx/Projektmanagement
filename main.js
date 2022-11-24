@@ -18,6 +18,10 @@ app.use(express.static(__dirname + "/public/img"));
 
 //Setup Get Request for "localhost:5000/"
 app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/html/index.html"));
+});
+
+app.get("/game", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/html/game.html"));
 });
 
