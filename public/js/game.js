@@ -10,6 +10,7 @@ const cardInfoWord = [document.getElementsByClassName("word_1"), document.getEle
 const pointsTeam1 = document.getElementById("spielstandTeam1");
 const pointsTeam2 = document.getElementById("spielstandTeam2");
 const currentTeam = 1;
+const roundTime = 2; // spaeter: abfrage von eingabe
 
 // ##################################################################### //
 // ######################## Database Integration ####################### //
@@ -96,7 +97,7 @@ trueBtn.addEventListener("click", trueBtnClicked);
  */
 
 // Set the date we're counting down to
-localStorage.time = 1000; // spaeter: abfrage von eingabe
+localStorage.time = roundTime;
 
 // Update the count down every 1 second
 
@@ -112,8 +113,10 @@ function countdown() {
 
     /* TIMER ABGELAUFEN */
     if (time <= 0) {
-        alert("TIMER EXPIRED!");
-        return null;
+        resetTime();
+        alert("Zeit abgelaufen! Bitte die Teams wechseln.\nDer neue Timer startet nach einem Klick auf 'OK'.");
+        roundOver();
+        // return null;
     }
 
     //Decrementing time and recalling the function in 1 second
@@ -133,14 +136,32 @@ function formatTime(time) {
     return String(minutes) + ":" + String(seconds);
 }
 
+function resetTime() {
+    localStorage.time = roundTime;
+}
+
+
+/**
+ * Teams wechseln nach Rundenende
+ */
+function roundOver() {
+    //change Team
+    if (currentTeam == 1) {
+        currentTeam = 2
+    }
+    if (currentTeam == 2) {
+        currentTeam = 1
+    }
+
+}
+async function popUpAlert() {
+    if (localStorage.time <= 0) {
+        alert("Zeit abgelaufen! Bitte die Teams wechseln.\nDer neue Timer startet nach einem Klick auf 'OK'.");
+        resetTime();
+        roundOver();
+    }
+}
+popUpAlert();
 countdown();
-
-/**
- * Anzeige unterbinden, wenn Timer auf 00:00 steht
- */
-
-/**
- * Teams wechseln
- */
-
 nextCard();
+
