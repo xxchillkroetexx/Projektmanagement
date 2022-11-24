@@ -1,0 +1,178 @@
+.head {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  /* ##################################################################### */
+  /* ##################################################################### */
+  /* ##################################################################### */
+}
+.head h1 {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: 0s;
+  line-height: 1.2em;
+}
+.head .box1 {
+  position: relative;
+  width: 33%;
+  height: 75px;
+  top: -3px;
+  left: -3px;
+  padding: 10px;
+  margin-right: 2%;
+  background: #333;
+  transition: 0.5s;
+}
+.head .box1 h1 {
+  color: blue;
+}
+.head .box1 .line_box1 {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  overflow: hidden;
+}
+.head .box1 .line_box1::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(transparent, blue, blue, blue, transparent);
+  -webkit-animation: animation 8s linear infinite;
+          animation: animation 8s linear infinite;
+}
+.head .box1 .line_box1::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: #292929;
+}
+.head .box2 {
+  position: relative;
+  width: 33%;
+  height: 30px;
+  top: -3px;
+  left: -3px;
+  padding: 10px;
+  margin-right: 2%;
+  background: #333;
+  transition: 0.5s;
+}
+.head .box2 .timer {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: 0s;
+  line-height: 1.2em;
+  color: white;
+}
+.head .box2 .line_box2 {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  overflow: hidden;
+}
+.head .box2 .line_box2::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  -webkit-animation: animation_timer 1s linear infinite;
+          animation: animation_timer 1s linear infinite;
+}
+.head .box2 .line_box2::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: #292929;
+}
+.head .box3 {
+  position: relative;
+  width: 33%;
+  height: 75px;
+  top: -3px;
+  left: 3px;
+  padding: 10px;
+  background: #333;
+  transition: 0.5s;
+}
+.head .box3 h1 {
+  color: red;
+}
+.head .box3 .line_box3 {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  overflow: hidden;
+}
+.head .box3 .line_box3::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 50px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(transparent, red, red, red, transparent);
+  -webkit-animation: animation 8s linear infinite;
+          animation: animation 8s linear infinite;
+}
+.head .box3 .line_box3::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: #292929;
+}
+
+/* ##################################################################### */
+@-webkit-keyframes animation {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes animation {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@-webkit-keyframes animation_timer {
+  0% {
+    background-color: green;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes animation_timer {
+  0% {
+    background-color: green;
+  }
+  100% {
+    background-color: transparent;
+  }
+}/*# sourceMappingURL=style_dark_game_head.css.map */

@@ -1,5 +1,5 @@
 //* DB response URL
-const dbResponseURL = "http://localhost:5000/db_cards/";
+const dbResponseURL = "./db_cards/";
 
 //Setup buttons and text fields
 const falseBtn = document.getElementById("false");

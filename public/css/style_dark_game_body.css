@@ -1,0 +1,256 @@
+/* Mobile :320px. */
+@media (max-width: 767px) {
+  h1 {
+    font-size: 24px;
+  }
+  .body .controls .button {
+    font-size: 10px;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+body {
+  display: flex;
+  background: #333;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.body {
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 50px;
+  /* ##################################################################### */
+}
+.body .card {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  background: #333;
+  transition: 0.5s;
+  /* ##################################################################### */
+  /* ##################################################################### */
+}
+.body .card .lines {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  overflow: hidden;
+}
+.body .card .lines::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background: #ffcd45;
+  /*
+  height: 150px;
+  background: linear-gradient(transparent, $--card_accent_color), $--card_accent_color), $--card_accent_color), transparent);
+  animation: card_animation 8s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  */
+}
+.body .card .lines::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #292929;
+}
+.body .card .content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* ##################################################################### */
+}
+.body .card .content .infos {
+  text-align: center;
+  transition: 0.5s;
+  color: #ffcd45;
+  line-height: 1.2em;
+  font-size: 1.25em;
+  font-weight: 500;
+}
+.body .card .content .infos * {
+  padding: 10px;
+  width: 100%;
+}
+.body .card .content .Word {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  width: 200px;
+  height: 50px;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: #000;
+  overflow: hidden;
+  transition: 0.5s;
+}
+.body .card .content .Word::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(transparent, #7aff3c, #7aff3c, #7aff3c, transparent);
+  -webkit-animation: word_animation 5s linear infinite;
+          animation: word_animation 5s linear infinite;
+}
+.body .card .content .Word::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: #292929;
+}
+.body .card .content .Word h1 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: 0s;
+  color: #7aff3c;
+  line-height: 1.2em;
+}
+.body .card:hover .content .infos {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+.body .card:hover .content .Word {
+  width: 250px;
+  height: 75px;
+  top: -30px;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+/* ##################################################################### */
+.controls {
+  position: relative;
+  width: 100vw;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  text-align: center;
+  transition: 0.5s;
+  background: #333;
+}
+
+.button {
+  position: relative;
+  width: 32%;
+  margin-right: 2%;
+  padding: 20px;
+  background: #333;
+  box-sizing: border-box;
+  border-radius: 15px;
+  box-shadow: 0 5px rgb(77, 77, 77);
+}
+.button:active {
+  box-shadow: 0 3px rgb(77, 77, 77);
+  transform: translateY(2px);
+}
+.button:last-child {
+  margin-right: 0;
+}
+
+#false {
+  border: 2px solid #b63636;
+  color: #b63636;
+}
+#false:hover {
+  background: #b63636;
+  color: #333;
+}
+
+#skip {
+  border: 2px solid #cbce13;
+  color: #cbce13;
+}
+#skip:hover {
+  background: #cbce13;
+  color: #333;
+}
+
+#true {
+  border: 2px solid #5baa58;
+  color: #5baa58;
+}
+#true:hover {
+  background: #5baa58;
+  color: #333;
+}
+#true::-moz-selection {
+  animation: animation_true 1s ease-in-out 1;
+}
+#true::selection {
+  -webkit-animation: animation_true 1s ease-in-out 1;
+          animation: animation_true 1s ease-in-out 1;
+}
+
+/* ##################################################################### */
+@-webkit-keyframes card_animation {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes card_animation {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@-webkit-keyframes word_animation {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+@keyframes word_animation {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+.footer {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 50px;
+  width: 100%;
+  background: #292929;
+}/*# sourceMappingURL=style_dark_game_body.css.map */
