@@ -5,6 +5,7 @@ const app = express();
 const PORT = process.env.PORT | 5000;
 const sqlite3 = require("sqlite3");
 const language = "de";
+const pathToDB = "database/spielekarten.db";
 
 //Import CSS, JS, IMG files
 app.use(express.static(__dirname + "/public/css"));
@@ -48,7 +49,12 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 // ############################## Database ############################# //
 // ##################################################################### //
 
-var db = new sqlite3.Database("database/spielekarten.db");
+try {
+  var db = new sqlite3.Database(pathToDB);
+} catch (e) {
+  console.log("Database Error:\n" + e);
+}
+
 
 //Get all possible Card-Words from Database
 async function getCards() {
