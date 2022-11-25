@@ -9,8 +9,8 @@ const cardWord = document.getElementById("h1_word");
 const cardInfoWord = [document.getElementsByClassName("word_1"), document.getElementsByClassName("word_2"), document.getElementsByClassName("word_3"), document.getElementsByClassName("word_4"), document.getElementsByClassName("word_5")];
 const pointsTeam1 = document.getElementById("spielstandTeam1");
 const pointsTeam2 = document.getElementById("spielstandTeam2");
-const currentTeam = 1;
-const roundTime = 2; // spaeter: abfrage von eingabe
+var currentTeam = 1;
+var roundTime = 120; // spaeter: abfrage von eingabe
 
 // ##################################################################### //
 // ######################## Database Integration ####################### //
@@ -64,11 +64,12 @@ function trueBtnClicked() {
         points++;
         pointsTeam1.innerHTML = points.toString();
     }
-    if (currentTeam == 2) {
+    else if (currentTeam == 2) {
         points = parseInt(pointsTeam2.innerHTML);
         points++;
         pointsTeam2.innerHTML = points.toString();
     }
+    
     nextCard();
 }
 
@@ -78,7 +79,7 @@ function falseBtnClicked() {
         points++;
         pointsTeam2.innerHTML = points.toString();
     }
-    if (currentTeam == 2) {
+    else if (currentTeam == 2) {
         points = parseInt(pointsTeam1.innerHTML);
         points++;
         pointsTeam1.innerHTML = points.toString();
@@ -113,10 +114,23 @@ function countdown() {
 
     /* TIMER ABGELAUFEN */
     if (time <= 0) {
-        resetTime();
-        alert("Zeit abgelaufen! Bitte die Teams wechseln.\nDer neue Timer startet nach einem Klick auf 'OK'.");
-        roundOver();
-        // return null;
+        const confirmed = confirm("Zeit abgelaufen! Bitte die Teams wechseln.\nDer neue Timer startet nach einem Klick auf 'OK'.");
+        if (confirmed) {
+            localStorage.time = roundTime;
+
+            if (currentTeam == 1) {
+                currentTeam = 2;
+            }
+            else {
+                currentTeam = 1;
+            }
+
+            countdown();
+
+
+
+        }
+        return null;
     }
 
     //Decrementing time and recalling the function in 1 second
@@ -136,25 +150,27 @@ function formatTime(time) {
     return String(minutes) + ":" + String(seconds);
 }
 
-function resetTime() {
+async function resetTime() {
     localStorage.time = roundTime;
+    return null;
 }
 
 
 /**
  * Teams wechseln nach Rundenende
  */
-function roundOver() {
+async function roundOver() {
     //change Team
     if (currentTeam == 1) {
         currentTeam = 2
     }
-    if (currentTeam == 2) {
+    else {
         currentTeam = 1
     }
+    return null;
 
 }
-async function popUpAlert() {
+function popUpAlert() {
     if (localStorage.time <= 0) {
         alert("Zeit abgelaufen! Bitte die Teams wechseln.\nDer neue Timer startet nach einem Klick auf 'OK'.");
         resetTime();
